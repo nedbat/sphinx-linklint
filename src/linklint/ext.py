@@ -8,7 +8,7 @@ from sphinx.util import logging
 from sphinx.util.typing import ExtensionMetadata
 
 import linklint
-from linklint.linklint import find_duplicate_refs, find_self_refs
+from linklint.linklint import find_duplicate_refs, find_obvious_refs, find_self_refs
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +21,7 @@ def init_data(app: Sphinx) -> None:
 FINDERS = [
     (find_self_refs, "self"),
     (find_duplicate_refs, "duplicate"),
+    (find_obvious_refs, "obvious"),
 ]
 
 
@@ -63,6 +64,12 @@ def display_results(app: Sphinx, exception: Exception | None) -> None:
 
 
 def setup(app: Sphinx) -> ExtensionMetadata:
+    app.add_config_value(
+        "linklint_obvious_refs",
+        [],
+        rebuild="html",
+        description="References that should not be linked because they are obvious",
+    )
     app.connect("builder-inited", init_data)
     app.connect("doctree-read", process_reference_nodes)
     app.connect("env-merge-info", merge_data)

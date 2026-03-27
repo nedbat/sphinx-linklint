@@ -222,6 +222,14 @@ def find_duplicate_refs(doctree: nodes.document) -> Iterable[nodes.Node]:
                 yield from refs[1:]
 
 
+def find_obvious_refs(doctree: nodes.document) -> Iterable[nodes.Node]:
+    for ref in doctree.findall(addnodes.pending_xref):
+        reftype = ref.get("reftype")
+        target = ref.get("reftarget")
+        if reftype == "class" and target in {"int", "float", "str", "list", "tuple", "dict"}:
+            yield ref
+
+
 @dataclass
 class LintResult:
     content: str
