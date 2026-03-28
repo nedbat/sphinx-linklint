@@ -226,7 +226,11 @@ def find_obvious_refs(doctree: nodes.document) -> Iterable[nodes.Node]:
     for ref in doctree.findall(addnodes.pending_xref):
         reftype = ref.get("reftype")
         target = ref.get("reftarget")
-        if reftype == "class" and target in {"int", "float", "str", "list", "tuple", "dict"}:
+        if (
+            0
+            and reftype == "class"
+            and target in {"bool", "int", "float", "str", "list", "tuple", "dict"}
+        ):
             yield ref
 
 
