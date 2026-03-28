@@ -12,30 +12,27 @@ from linklint.dump import dump_doctree
 from linklint.utils import SAVE_INTERMEDIATE, in_tempdir, slug_for_test
 
 
-def run_sphinx_for_doctree(content: str, buildername: str, extensions: list[str]) -> nodes.document:
-    Path("index.rst").write_text(content, encoding="utf-8")
-    Path("conf.py").write_text(f"extensions = {extensions!r}\n", encoding="utf-8")
-
-    with docutils_namespace():
-        app = Sphinx(
-            srcdir=".",
-            confdir=".",
-            outdir="_build",
-            doctreedir="_build/.doctrees",
-            buildername=buildername,
-            freshenv=True,
-            status=None,
-            warning=None,
-        )
-
-        app.build()
-        return app.env.get_doctree("index")
-
-
 def parse_rst(content: str) -> nodes.document:
     """Parse RST content using Sphinx and return the doctree."""
     with in_tempdir():
-        doctree = run_sphinx_for_doctree(content, buildername="dummy", extensions=[])
+        Path("index.rst").write_text(content, encoding="utf-8")
+        Path("conf.py").write_text("", encoding="utf-8")
+
+        with docutils_namespace():
+            app = Sphinx(
+                srcdir=".",
+                confdir=".",
+                outdir="_build",
+                doctreedir="_build/.doctrees",
+                buildername="dummy",
+                freshenv=True,
+                status=None,
+                warning=None,
+            )
+
+            app.build()
+            doctree = app.env.get_doctree("index")
+
     fix_node_lines(doctree)
     if SAVE_INTERMEDIATE:
         save_test_doctree(doctree)

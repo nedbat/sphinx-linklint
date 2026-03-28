@@ -94,7 +94,8 @@ def run_sphinx(content: str, buildername: str, extensions: list[str]) -> SphinxR
     # Filter out the expected duplicate object warning from our test data,
     # which sometimes intentionally defines two things with the same name.
     warnings = "".join(
-        line for line in result.warning.splitlines(keepends=True)
+        line
+        for line in result.warning.splitlines(keepends=True)
         if "duplicate object description" not in line
     )
     print(f"WARNINGS: {warnings}")
