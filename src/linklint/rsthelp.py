@@ -1,58 +1,41 @@
 """Utilities for RST files."""
 
-import io
 import re
 import string
-from dataclasses import dataclass
 from pathlib import Path
 
 from docutils import nodes
 from sphinx.application import Sphinx
+from sphinx.util.docutils import docutils_namespace
 
 from linklint.dump import dump_doctree
 from linklint.utils import SAVE_INTERMEDIATE, in_tempdir, slug_for_test
 
 
-@dataclass
-class SphinxResult:
-    doctree: nodes.document
-    warning: str
-    status: str
-
-
-def run_sphinx(content: str, buildername: str, extensions: list[str]) -> SphinxResult:
-    # Create minimal conf.py
+def run_sphinx_for_doctree(content: str, buildername: str, extensions: list[str]) -> nodes.document:
+    Path("index.rst").write_text(content, encoding="utf-8")
     Path("conf.py").write_text(f"extensions = {extensions!r}\n", encoding="utf-8")
 
-    # Copy the RST file as index.rst
-    Path("index.rst").write_text(content, encoding="utf-8")
+    with docutils_namespace():
+        app = Sphinx(
+            srcdir=".",
+            confdir=".",
+            outdir="_build",
+            doctreedir="_build/.doctrees",
+            buildername=buildername,
+            freshenv=True,
+            status=None,
+            warning=None,
+        )
 
-    status = io.StringIO()
-    warning = io.StringIO()
-    app = Sphinx(
-        srcdir=".",
-        confdir=".",
-        outdir="_build",
-        doctreedir="_build/.doctrees",
-        buildername=buildername,
-        freshenv=True,
-        status=status,
-        warning=warning,
-    )
-
-    app.build()
-    result = SphinxResult(
-        doctree=app.env.get_doctree("index"),
-        warning=warning.getvalue(),
-        status=status.getvalue(),
-    )
-    return result
+        app.build()
+        return app.env.get_doctree("index")
 
 
 def parse_rst(content: str) -> nodes.document:
     """Parse RST content using Sphinx and return the doctree."""
     with in_tempdir():
-        doctree = run_sphinx(content, buildername="dummy", extensions=[]).doctree
+        doctree = run_sphinx_for_doctree(content, buildername="dummy", extensions=[])
     fix_node_lines(doctree)
     if SAVE_INTERMEDIATE:
         save_test_doctree(doctree)

@@ -7,7 +7,7 @@ rst = '''
 
     .. versionadded:: 3.3
 
-    **Source code:** :source:`Lib/lzma.py`
+    **Source code:** Lib/lzma.py
 
     --------------
 
@@ -21,7 +21,7 @@ rst = '''
     thread-safe, so if you need to use a single :class:`LZMAFile` instance
     from multiple threads, it is necessary to protect it with a lock.
 
-    .. include:: ../includes/optional-module.rst
+    .. comment this out: .. include:: ../includes/optional-module.rst
 
 
     .. exception:: LZMAError
@@ -364,9 +364,7 @@ html = '''
         <strong>
           Source code:
         </strong>
-        <a href="#id1">
-          :source:`Lib/lzma.py`
-        </a>
+        Lib/lzma.py
       </p>
       <hr>
       </hr>
@@ -471,22 +469,28 @@ html = '''
           <dd>
             <p>
               Open an LZMA-compressed file in binary or text mode, returning a
-              file object
+              <a href="dummy_content.html#term-file-object">
+                file object
+              </a>
               .
             </p>
             <p>
               The
               filename
               argument can be either an actual file name (given as a
-              <code>
-                str
-              </code>
+              <a href="dummy_content.html#str">
+                <code>
+                  str
+                </code>
+              </a>
               ,
               <code>
                 bytes
               </code>
               or
-              path-like
+              <a href="dummy_content.html#term-path-like-object">
+                path-like
+              </a>
               object), in which case the named file is opened, or it can be an existing file object to read from or write to.
             </p>
             <p>
@@ -636,7 +640,9 @@ html = '''
               <p>
                 Changed in version 3.6:
                 Accepts a
-                path-like object
+                <a href="dummy_content.html#term-path-like-object">
+                  path-like object
+                </a>
                 .
               </p>
             </div>
@@ -687,19 +693,25 @@ html = '''
                 LZMAFile
               </code>
               can wrap an already-open
-              file object
+              <a href="dummy_content.html#term-file-object">
+                file object
+              </a>
               , or operate directly on a named file. The
               filename
               argument specifies either the file object to wrap, or the name of the file to open (as a
-              <code>
-                str
-              </code>
+              <a href="dummy_content.html#str">
+                <code>
+                  str
+                </code>
+              </a>
               ,
               <code>
                 bytes
               </code>
               or
-              path-like
+              <a href="dummy_content.html#term-path-like-object">
+                path-like
+              </a>
               object). When wrapping an existing file object, the wrapped file will not be closed when the
               <code>
                 LZMAFile
@@ -810,9 +822,11 @@ html = '''
                 truncate()
               </code>
               . Iteration and the
-              <code>
-                with
-              </code>
+              <a href="dummy_content.html#with">
+                <code>
+                  with
+                </code>
+              </a>
               statement are supported.
             </p>
             <p>
@@ -890,7 +904,9 @@ html = '''
                     name
                   </code>
                   attribute of the underlying
-                  file object
+                  <a href="dummy_content.html#term-file-object">
+                    file object
+                  </a>
                   .
                 </p>
                 <div>
@@ -932,7 +948,9 @@ html = '''
               <p>
                 Changed in version 3.6:
                 Accepts a
-                path-like object
+                <a href="dummy_content.html#term-path-like-object">
+                  path-like object
+                </a>
                 .
               </p>
             </div>
@@ -1361,7 +1379,9 @@ html = '''
                   Decompress
                   data
                   (a
-                  bytes-like object
+                  <a href="dummy_content.html#term-bytes-like-object">
+                    bytes-like object
+                  </a>
                   ), returning uncompressed data as bytes. Some of
                   data
                   may be buffered internally, for use in later calls to

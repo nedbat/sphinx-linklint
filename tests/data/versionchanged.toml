@@ -69,7 +69,9 @@ html = '''
             Open a ZIP file, where
             file
             can be a path to a file (a string), a file-like object or a
-            path-like object
+            <a href="dummy_content.html#term-path-like-object">
+              path-like object
+            </a>
             .
           </p>
           <div>

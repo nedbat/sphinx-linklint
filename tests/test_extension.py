@@ -11,10 +11,10 @@ from pathlib import Path
 
 import pytest
 
-from linklint.rsthelp import run_sphinx, save_test_doctree
+from linklint.rsthelp import save_test_doctree
 from linklint.utils import SAVE_INTERMEDIATE, in_tempdir
 
-from helpers import DATA_DIR, read_toml
+from helpers import DATA_DIR, read_toml, run_sphinx
 from summarize_html import summarize_html_file
 
 
@@ -30,17 +30,17 @@ def test_summarize_html(toml_name: str) -> None:
     rst = data["rst"]
     with in_tempdir():
         result = run_sphinx(rst, buildername="html", extensions=["linklint.ext"])
-        summary = summarize_html_file("_build/index.html")
+        summary = summarize_html_file(result.html_file)
         if SAVE_INTERMEDIATE:
             # In case of needing to see what happened, copy the HTML etc to tmp.
             shutil.copytree("_build/_static", PROJECT / "tmp/html/_static", dirs_exist_ok=True)
-            shutil.copyfile("_build/index.html", PROJECT / f"tmp/html/{toml_name}.html")
+            shutil.copyfile(result.html_file, PROJECT / f"tmp/html/{toml_name}.html")
             (PROJECT / f"tmp/html/{toml_name}_summary.html").write_text(summary, encoding="utf-8")
 
             # Also run without the extension to understand Sphinx native behavior.
             run_sphinx(rst, buildername="html", extensions=[])
-            shutil.copyfile("_build/index.html", PROJECT / f"tmp/html/{toml_name}_nofix.html")
-            nofix_summary = summarize_html_file("_build/index.html")
+            shutil.copyfile(result.html_file, PROJECT / f"tmp/html/{toml_name}_nofix.html")
+            nofix_summary = summarize_html_file(result.html_file)
             (PROJECT / f"tmp/html/{toml_name}_summary_nofix.html").write_text(
                 nofix_summary, encoding="utf-8"
             )
