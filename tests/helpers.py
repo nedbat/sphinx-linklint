@@ -98,7 +98,8 @@ def run_sphinx(content: str, buildername: str, extensions: list[str]) -> SphinxR
         for line in result.warning.splitlines(keepends=True)
         if "duplicate object description" not in line
     )
-    print(f"WARNINGS: {warnings}")
+    if warnings:
+        print(f"WARNINGS: {warnings}")
     assert not warnings
 
     return result
