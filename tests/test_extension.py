@@ -10,13 +10,11 @@ import shutil
 from pathlib import Path
 
 import pytest
-
-from linklint.rsthelp import run_sphinx, save_test_doctree
-from linklint.utils import SAVE_INTERMEDIATE, in_tempdir
-
 from helpers import DATA_DIR, read_toml
 from summarize_html import summarize_html_file
 
+from linklint.rsthelp import run_sphinx, save_test_doctree
+from linklint.utils import SAVE_INTERMEDIATE, in_tempdir
 
 PROJECT = Path(__file__).parent.parent
 

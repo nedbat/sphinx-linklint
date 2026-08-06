@@ -4,7 +4,6 @@ import tomllib
 from pathlib import Path
 from textwrap import dedent
 
-
 PROJECT = Path(__file__).parent.parent
 DATA_DIR = PROJECT / "tests/data"
 

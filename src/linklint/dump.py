@@ -3,7 +3,6 @@ from typing import TextIO
 
 from docutils import nodes
 
-
 INTERESTING_KEYS = [
     "ids",
     "names",

@@ -3,10 +3,9 @@ from textwrap import dedent
 from typing import Any
 
 import pytest
+from helpers import text_and_id
 
 from linklint.linklint import LintIssue, lint_content
-
-from helpers import text_and_id
 
 
 def diff_lines(text1: str, text2: str) -> str:
@@ -29,8 +28,7 @@ def lint_test_case(
 ):
     """Helper to create pytest parameters for linting tests."""
     rst, id = text_and_id(text=rst, id=id)
-    if diff.startswith("\n"):
-        diff = diff[1:]
+    diff = diff.removeprefix("\n")
     return pytest.param(rst, issues, dedent(diff), id=id, marks=marks or [])
 
 

@@ -1,6 +1,6 @@
-from linklint.rsthelp import is_header_line
-
 import pytest
+
+from linklint.rsthelp import is_header_line
 
 
 @pytest.mark.parametrize(

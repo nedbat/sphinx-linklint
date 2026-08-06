@@ -3,8 +3,8 @@
 import collections
 import re
 from collections import defaultdict
+from collections.abc import Iterable
 from dataclasses import dataclass
-from typing import Iterable
 
 from docutils import nodes
 from sphinx import addnodes
@@ -19,11 +19,13 @@ class Resolver:
 
     # Dummy lambda's so that the object_types dict can be identical to the
     # code in sphinx/sphinx/domains/python/__init__.py.
-    ObjType = lambda _, *refs: refs  # noqa: E731
-    _ = lambda s: 0  # noqa: E731
+    # Although we've tweaked the values a bit.
+    ObjType = lambda _, *refs: refs
+    _ = lambda s: 0
 
     # object_types map from sphinx
     # sphinx/sphinx/domains/python/__init__.py:725
+    # ruff: ignore[RUF012]
     object_types = {
         "function": ObjType(_("function"), "func", "meth", "obj"),
         "data": ObjType(_("data"), "data", "obj"),
@@ -38,6 +40,7 @@ class Resolver:
         "module": ObjType(_("module"), "mod", "obj"),
     }
 
+    # ruff: ignore[RUF012]
     reftype_to_objtype = collections.defaultdict(list)
     for objtype, names in object_types.items():
         for name in names:
@@ -149,8 +152,7 @@ class RefFinder(nodes.SparseNodeVisitor):
 
         if reftype != "mod" and self.module_stack:
             mod_prefix = self.module_stack[-1] + "."
-            if target.startswith(mod_prefix):
-                target = target[len(mod_prefix) :]
+            target = target.removeprefix(mod_prefix)
 
         if reftype == "meth" and "." not in target and self.class_stack:
             target = f"{self.class_stack[-1]}.{target}"
@@ -210,7 +212,7 @@ def find_self_refs(doctree: nodes.document) -> Iterable[nodes.Node]:
 def check_duplicate_refs_in_paragraph(work: LintWork) -> Iterable[LintIssue]:
     """Check references that appear more than once in the same paragraph."""
     if work.fix:
-        raise Exception("Fixing is not available for --check=paradup")
+        raise RuntimeError("Fixing is not available for --check=paradup")
 
     for ref in find_duplicate_refs(work.doctree):
         line = node_line_number(ref)

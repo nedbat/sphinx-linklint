@@ -6,7 +6,6 @@ from typing import cast
 
 from docutils import nodes
 
-
 # $set_env.py: LINKLINT_SAVE_INTERMEDIATE - Save intermediate data in files for debugging.
 SAVE_INTERMEDIATE = os.getenv("LINKLINT_SAVE_INTERMEDIATE") == "1"
 
@@ -24,9 +23,8 @@ def slug_for_test() -> str:  # pragma: debugging
 @contextlib.contextmanager
 def in_tempdir():
     """Make a temp directory and cd into it, then come back and delete it."""
-    with tempfile.TemporaryDirectory() as tmpdir:
-        with contextlib.chdir(tmpdir):
-            yield
+    with tempfile.TemporaryDirectory() as tmpdir, contextlib.chdir(tmpdir):
+        yield
 
 
 def plural(n: int, thing: str = "", things: str = "") -> str:

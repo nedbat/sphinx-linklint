@@ -72,12 +72,12 @@ class HtmlSummarizer(HTMLParser):
             return True
         return False
 
-    # Map of tags to the parent tag that should get their ids.
-    ID_PARENTS = {
-        "dt": "dl",
-    }
-
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        # Map of tags to the parent tag that should get their ids.
+        ID_PARENTS = {
+            "dt": "dl",
+        }
+
         dattrs = dict(attrs)
         if self.main and not self.ignoring:
             if self.should_ignore(tag, dattrs):
@@ -97,7 +97,7 @@ class HtmlSummarizer(HTMLParser):
                 if id:
                     assert id not in self.current_ids, f"Duplicate id: {id}"
                     self.current_ids.add(id)
-                    parent_to_id = self.ID_PARENTS.get(tag)
+                    parent_to_id = ID_PARENTS.get(tag)
                     if parent_to_id and self.tags and self.tags[-1] == parent_to_id:
                         self.element_ids[-1].append(id)
                         ids = []
