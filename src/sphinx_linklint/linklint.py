@@ -9,9 +9,9 @@ from dataclasses import dataclass
 from docutils import nodes
 from sphinx import addnodes
 
-from linklint.regions import Region, find_regions
-from linklint.rsthelp import parse_rst, resub_in_rst_line
-from linklint.utils import node_line_number, node_traceback
+from sphinx_linklint.regions import Region, find_regions
+from sphinx_linklint.rsthelp import parse_rst, resub_in_rst_line
+from sphinx_linklint.utils import node_line_number, node_traceback
 
 
 class Resolver:

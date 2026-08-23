@@ -1,5 +1,5 @@
 [project]
-name = "linklint"
+name = "sphinx-linklint"
 description = "A Sphinx extension to omit needless links"
 readme = "README.rst"
 authors = [
@@ -9,6 +9,7 @@ license = "Apache-2.0"
 
 classifiers = [
     "Development Status :: 4 - Beta",
+    "Framework :: Sphinx :: Extension",
     "Programming Language :: Python",
 ]
 
@@ -21,7 +22,7 @@ dependencies = [
 dynamic = ["version"]
 
 [project.urls]
-Source = "https://github.com/nedbat/linklint"
+Source = "https://github.com/nedbat/sphinx-linklint"
 
 [project.optional-dependencies]
 dev = [
@@ -36,10 +37,10 @@ dev = [
 ]
 
 [project.scripts]
-linklint = "linklint.cli:main"
+sphinx-linklint = "sphinx_linklint.cli:main"
 
 [tool.setuptools.dynamic]
-version.attr = "linklint.__version__"
+version.attr = "sphinx_linklint.__version__"
 
 [build-system]
 requires = ["setuptools>=80"]
@@ -62,19 +63,19 @@ filterwarnings = [
 
 [tool.coverage.paths]
 source = [
-    "src/linklint",
-    "*/site-packages/linklint",
+    "src/sphinx_linklint",
+    "*/site-packages/sphinx_linklint",
 ]
 tests = [
     "tests",
-    "*/linklint/tests",
+    "*/sphinx-linklint/tests",
 ]
 
 [tool.coverage.run]
 branch = true
 parallel = true
 source = ["tests"]
-source_pkgs = ["linklint"]
+source_pkgs = ["sphinx_linklint"]
 
 [tool.coverage.report]
 exclude_also = [

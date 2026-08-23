@@ -5,7 +5,7 @@ from typing import Any
 import pytest
 from helpers import text_and_id
 
-from linklint.linklint import LintIssue, lint_content
+from sphinx_linklint.linklint import LintIssue, lint_content
 
 
 def diff_lines(text1: str, text2: str) -> str:

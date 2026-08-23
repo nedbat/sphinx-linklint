@@ -2,8 +2,8 @@ import argparse
 import sys
 from pathlib import Path
 
-from linklint.linklint import CHECKS, LintIssue, lint_content
-from linklint.utils import plural
+from sphinx_linklint.linklint import CHECKS, LintIssue, lint_content
+from sphinx_linklint.utils import plural
 
 
 def lint_file(filepath: str, fix: bool, checks: set[str]) -> list[LintIssue]:

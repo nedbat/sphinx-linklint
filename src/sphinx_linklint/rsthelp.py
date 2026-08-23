@@ -9,8 +9,8 @@ from pathlib import Path
 from docutils import nodes
 from sphinx.application import Sphinx
 
-from linklint.dump import dump_doctree
-from linklint.utils import SAVE_INTERMEDIATE, in_tempdir, slug_for_test
+from sphinx_linklint.dump import dump_doctree
+from sphinx_linklint.utils import SAVE_INTERMEDIATE, in_tempdir, slug_for_test
 
 
 @dataclass

@@ -7,8 +7,8 @@ from sphinx.environment import BuildEnvironment
 from sphinx.util import logging
 from sphinx.util.typing import ExtensionMetadata
 
-import linklint
-from linklint.linklint import find_duplicate_refs, find_self_refs
+import sphinx_linklint
+from sphinx_linklint.linklint import find_duplicate_refs, find_self_refs
 
 logger = logging.getLogger(__name__)
 
@@ -69,7 +69,7 @@ def setup(app: Sphinx) -> ExtensionMetadata:
     app.connect("build-finished", display_results)
 
     return {
-        "version": linklint.__version__,
+        "version": sphinx_linklint.__version__,
         "parallel_read_safe": True,
         "parallel_write_safe": True,
     }

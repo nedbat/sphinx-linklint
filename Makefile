@@ -28,7 +28,7 @@ dist:
 	python -m build --sdist --wheel
 
 release:
-	@echo "Update src/linklint/__init__.py"
+	@echo "Update src/sphinx_linklint/__init__.py"
 	@echo "Update README.rst"
 	@echo "Tag in git"
 	@echo "Push to GitHub"

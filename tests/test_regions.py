@@ -1,8 +1,8 @@
 import pytest
 from helpers import text_and_id
 
-from linklint.regions import Region, find_regions
-from linklint.rsthelp import parse_rst
+from sphinx_linklint.regions import Region, find_regions
+from sphinx_linklint.rsthelp import parse_rst
 
 
 def region_test_case(*, rst: str, regions: list[Region], id: str = ""):

@@ -51,7 +51,7 @@ def dump_doctree(node: nodes.Node, fp: TextIO, indent: int = 0) -> None:  # prag
 
 
 if __name__ == "__main__":
-    from linklint.linklint import parse_rst
+    from sphinx_linklint.linklint import parse_rst
 
     with open(sys.argv[1]) as f:
         dump_doctree(parse_rst(f.read()), sys.stdout)

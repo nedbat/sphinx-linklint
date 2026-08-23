@@ -13,8 +13,8 @@ import pytest
 from helpers import DATA_DIR, read_toml
 from summarize_html import summarize_html_file
 
-from linklint.rsthelp import run_sphinx, save_test_doctree
-from linklint.utils import SAVE_INTERMEDIATE, in_tempdir
+from sphinx_linklint.rsthelp import run_sphinx, save_test_doctree
+from sphinx_linklint.utils import SAVE_INTERMEDIATE, in_tempdir
 
 PROJECT = Path(__file__).parent.parent
 
@@ -27,7 +27,7 @@ def test_summarize_html(toml_name: str) -> None:
     data = read_toml(toml_name)
     rst = data["rst"]
     with in_tempdir():
-        result = run_sphinx(rst, buildername="html", extensions=["linklint.ext"])
+        result = run_sphinx(rst, buildername="html", extensions=["sphinx_linklint.ext"])
         summary = summarize_html_file("_build/index.html")
         if SAVE_INTERMEDIATE:
             # In case of needing to see what happened, copy the HTML etc to tmp.
