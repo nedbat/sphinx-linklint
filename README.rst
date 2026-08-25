@@ -87,7 +87,10 @@ v2.0.0 (2026-08-25)
 Renamed to sphinx-linklint to clarify that this is a Sphinx extension and tool.
 Fixes `issue 19`_.
 
+Fix the sdist to include all files needed for the project, closing `issue 21`_.
+
 .. _issue 19: https://github.com/nedbat/linklint/issues/19
+.. _issue 21: https://github.com/nedbat/linklint/issues/21
 
 v1.0.3 (2026-08-25)
 -------------------
