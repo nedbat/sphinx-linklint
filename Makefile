@@ -26,6 +26,7 @@ sterile: clean
 
 dist:
 	python -m build --sdist --wheel
+	check-manifest
 
 release:
 	@echo "Update src/sphinx_linklint/__init__.py"

@@ -28,6 +28,7 @@ Source = "https://github.com/nedbat/sphinx-linklint"
 dev = [
     "actionlint-py",
     "build",
+    "check-manifest",
     "coverage",
     "pytest",
     "ruff",
@@ -86,3 +87,12 @@ exclude_also = [
 ]
 show_missing = true
 skip_covered = true
+
+[tool.check-manifest]
+ignore = [
+    "PKG-INFO",
+    "*.egg-info",
+    "*.egg-info/*",
+    "setup.cfg",
+]
+ignore-default-rules = true

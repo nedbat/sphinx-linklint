@@ -1,1 +1,13 @@
+# MANIFEST.in rules are strange. Many files are found automatically, but many
+# are not.
+
+include .editorconfig
+include .git-blame-ignore-revs
+include .gitignore
+include .pre-commit-config.yaml
+include Makefile
 include tox.ini
+
+recursive-include .github *
+recursive-include tests *.py
+recursive-include tests/data *.toml

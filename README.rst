@@ -81,6 +81,13 @@ To try local changes in the CPython docs::
 Changes
 =======
 
+v2.0.1 (2026-08-26)
+-------------------
+
+Fix the sdist for real, closing `issue 22`_.
+
+.. _issue 22: https://github.com/nedbat/linklint/issues/22
+
 v2.0.0 (2026-08-25)
 -------------------
 
