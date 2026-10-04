@@ -65,6 +65,11 @@ hard-code the decisions.
 Changes
 =======
 
+v2.0.2 (2026-10-04)
+-------------------
+
+Improved performance.
+
 v2.0.1 (2026-08-26)
 -------------------
 
