@@ -61,22 +61,6 @@ If you agree with linklint's decisions, the Sphinx extension is a better
 option, since it doesn't require changing the source files, and doesn't
 hard-code the decisions.
 
-Testing on CPython
-==================
-
-To try local changes in the CPython docs::
-
-    cd python/cpython/Doc
-    make clean venv html
-    mv build build0
-    sed -i '' "/sphinx-linklint/s@.*@-e $HOME/linklint@" requirements.txt
-    make clean venv
-    uv pip install -r requirements.txt
-    make html
-    meld build0/html build/html
-    # or
-    diff -I 'Last updated on' -r build0/html build/html
-
 
 Changes
 =======
@@ -163,3 +147,40 @@ v0.1.0 (2026-02-21)
 
 First version: works as a linter with ``--check`` and ``--fix`` to change .rst
 source files.
+
+Maintenance
+===========
+
+How to work on this repo.
+
+Testing on CPython
+------------------
+
+To try local changes in the CPython docs::
+
+    cd python/cpython/Doc
+    make clean venv html
+    mv build build0
+    sed -i '' "/sphinx-linklint/s@.*@-e $HOME/linklint@" requirements.txt
+    make clean venv
+    uv pip install -r requirements.txt
+    make html
+    meld build0/html build/html
+    # or
+    diff -I 'Last updated on' -r build0/html build/html
+
+Publishing
+----------
+
+To release a new version:
+
+#. Update the Changes section in README.rst
+
+#. Change the ``__version__`` value in ``src/sphinx_linklint/__init__.py``.
+
+#. Commit the changes.
+
+#. Add a tag named for the version, like ``1.2.3``.
+
+#. Push the tag, a GitHub action will use trusted publishing to publish to
+   PyPI.
