@@ -24,7 +24,16 @@ class Region:
 
 class RegionFinder:
     def __init__(self) -> None:
-        self.last_line = 0
+        self._last_node: nodes.Node | None = None
+
+    @property
+    def last_line(self) -> int:
+        # Most line extents are overwritten before a region needs them.
+        node = self._last_node
+        if node is None:
+            return 0
+        assert node.line is not None
+        return node.line + node.astext().count("\n")
 
     def find_regions(self, node: nodes.Node) -> Iterable[Region]:
         kind = None
@@ -49,9 +58,8 @@ class RegionFinder:
                         if isinstance(kid, addnodes.desc_signature)
                     ]
 
-        last_line = getattr(node, "line", None)
-        if last_line is not None:
-            self.last_line = last_line + node.astext().count("\n")
+        if getattr(node, "line", None) is not None:
+            self._last_node = node
 
         for child in node.children:
             for subregion in self.find_regions(child):

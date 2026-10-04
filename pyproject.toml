@@ -84,6 +84,7 @@ exclude_also = [
     "pragma: only failure",
     "pragma: debugging",
     "if SAVE_INTERMEDIATE:",
+    "pytest.fail",
 ]
 show_missing = true
 skip_covered = true

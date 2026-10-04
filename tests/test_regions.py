@@ -1,7 +1,9 @@
 import pytest
+from docutils import nodes
+from docutils.utils import new_document
 from helpers import text_and_id
 
-from sphinx_linklint.regions import Region, find_regions
+from sphinx_linklint.regions import Region, RegionFinder, find_regions
 from sphinx_linklint.rsthelp import parse_rst
 
 
@@ -134,3 +136,35 @@ TEST_CASES = [
 @pytest.mark.parametrize("rst, regions", TEST_CASES)
 def test_regions(rst: str, regions: list[Region]) -> None:
     assert sorted(find_regions(parse_rst(rst))) == sorted(regions)
+
+
+@pytest.mark.parametrize("last_line", [0, 5])
+def test_skip_overwritten_line_extents(monkeypatch, last_line: int) -> None:
+    doctree = new_document("test.rst")
+    section = nodes.section(ids=["module-example"])
+    section.line = 2
+    first = nodes.paragraph(text="Earlier paragraph.")
+    first.line = 3
+    last = nodes.paragraph(text="Last paragraph.\nSecond line.")
+    last.line = last_line
+    section.extend([first, last])
+    doctree += section
+
+    def unexpected_astext() -> None:
+        pytest.fail("An overwritten line extent should not be computed")
+
+    monkeypatch.setattr(section, "astext", unexpected_astext)
+    monkeypatch.setattr(first, "astext", unexpected_astext)
+
+    assert list(find_regions(doctree)) == [
+        region("module", "example", start=1, end=last_line + 1),
+    ]
+
+
+def test_last_line_without_numbered_nodes() -> None:
+    doctree = new_document("test.rst")
+    doctree += nodes.paragraph(text="Unnumbered paragraph.")
+    finder = RegionFinder()
+
+    assert list(finder.find_regions(doctree)) == []
+    assert finder.last_line == 0
